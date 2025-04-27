@@ -23,26 +23,27 @@ pipeline{
                 '''
             }
         }
-        parallel (Tesing parallel)
-        parallel {
-            stage('TEST1') {
-                steps {
-                    script { 
-                        echo "This is a testing  stage"
+        stage ('Testing parallel') {
+            parallel {
+                stage('TEST1') {
+                    steps {
+                        script { 
+                            echo "This is a testing  stage"
+                        }
+                        sh '''
+                        uname -a
+                        whoami
+                        '''
                     }
-                    sh '''
-                    uname -a
-                    whoami
-                    '''
                 }
-            }
-            stage('TEST2') {
-                steps {
-                    echo "This is a testing  stage2"
-                    sh '''
-                    uptime
-                    date
-                    '''
+                stage('TEST2') {
+                    steps {
+                        echo "This is a testing  stage2"
+                        sh '''
+                        uptime
+                        date
+                        '''
+                    }
                 }
             }
         }
