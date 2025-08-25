@@ -1,1 +1,36 @@
 @Library("my_library") _
+pipeline {
+    agent any
+    stages {
+        stage('checkout') {
+            steps {
+                script {
+                    echo 'Checking out the code...'
+                    def config = [
+                        url: 'https://github.com/Muralidhar302/mern_3tire-main.git',
+                        branch: 'main',
+                        credentialsId: 'github_token'
+                    ]
+                gitcheckout(config)
+                sh '''
+                    ls -ltr
+                '''
+                }
+            }
+        }
+        stage('Test') {
+            steps {
+                script {
+                    myLibraryFunction('Running tests...')
+                }
+            }
+        }
+        stage('Deploy') {
+            steps {
+                script {
+                    myLibraryFunction('Deploying the application...')
+                }
+            }
+        }
+    }
+}
